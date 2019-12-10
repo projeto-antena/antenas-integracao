@@ -152,7 +152,7 @@ public class ControllerCadi {
 								);
 						return userData.toJson();
 					} else {
-						return "Email já cadastrado";
+						return 0;
 					}
 				} catch (Exception ex) {
 					return "erro 500 " + ex;
