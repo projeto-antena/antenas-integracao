@@ -8,14 +8,42 @@
 
 }
 
+.button {
+  width: 80px;
+  background-color: transparent;
+  color: #1a72b3;
+}
+
+.logout {
+  border-radius: 2px;
+  background-color: #CF272A;
+  color: white;
+}
+
+.profile:hover {
+  box-sizing: border-box;
+  border-bottom: 2px solid #1a72b3;
+}
+
 .navbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 68px;
 }
 
 .navbar a {
     margin: 0 8px;
+}
+
+.navbar-buttons {
+  display: flex;
+  flex-direction: row;
+  height: 52px;
+}
+
+.navbar-buttons button:first-child {
+  margin-right: 5px;
 }
 
 .head {
@@ -59,7 +87,7 @@ input[type=text], input[type=password] {
   
   /* Set a style for all buttons */
   button {
-    background-color: #4CAF50;
+    /*background-color: #4CAF50; */
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
