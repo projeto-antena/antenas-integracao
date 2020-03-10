@@ -11,7 +11,7 @@ import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.result.DeleteResult;
 
 
-public class Model{
+public class ModelEmpresario{
 
 
 	MongoClient mongoClient = new MongoClient( "127.0.0.1" );
@@ -27,18 +27,19 @@ public class Model{
 		return projectsFound.deleteOne(project);
 	}
 	
+	public Document updateProjeto(Document projeto) {
+		MongoCollection<Document> projetos = db.getCollection("projeto");
+		BasicDBObject query = new BasicDBObject();
+		query.append("_id", projeto.get("_id"));
+		Bson newDocument = new Document("$set", projeto);
+		return projetos.findOneAndUpdate(query, newDocument, (new FindOneAndUpdateOptions()).upsert(true));
+	}
+	
 	public void addEmpresario(Document empresario) {
 		MongoCollection<Document> empresarios = db.getCollection("empresario");
 		empresarios.insertOne(empresario);
 	}
 	
-	public Document updateProjeto(Document projeto) {
-		MongoCollection<Document> projetos = db.getCollection("projeto");
-    	BasicDBObject query = new BasicDBObject();
-    	query.append("_id", projeto.get("_id"));
-    	Bson newDocument = new Document("$set", projeto);
-    	return projetos.findOneAndUpdate(query, newDocument, (new FindOneAndUpdateOptions()).upsert(true));
-	}
 
 	public Document updateEmpresario(Document empresario) {
 		MongoCollection<Document> projetos = db.getCollection("empresario");

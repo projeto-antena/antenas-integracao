@@ -15,7 +15,7 @@ import spark.Response;
 import spark.Route;
 
 import antena.utils.Jwt;
-import antena.utils.emailService;
+import antena.utils.EmailService;
 public class ControllerCadi {
 
 	private ModelCadi model;
@@ -145,7 +145,7 @@ public class ControllerCadi {
 					Document found = model.searchByEmail(userData.getString("email"));
 					if (found == null || found.isEmpty()) {
 						model.addCADI(userData);
-						new emailService(userData).sendSimpleEmail(
+						new EmailService(userData).sendSimpleEmail(
 								"Antenas - Sua confirmação de conta",
 								"Por favor, para confirmar sua conta, clique no link: ",
 								"cadi"

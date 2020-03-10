@@ -11,19 +11,19 @@ import org.json.*;
 import com.mongodb.client.FindIterable;
 
 import antena.utils.Jwt;
-import antena.utils.emailService;
+import antena.utils.EmailService;
 
 import org.bson.Document;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class REST {
+public class ControllerEmpresario {
 
-	private Model model;
+	private ModelEmpresario model;
 	private String WhoIsauth;
 
-	public REST(Model store) {
+	public ControllerEmpresario(ModelEmpresario store) {
 		model = store;
 	}
 
@@ -120,7 +120,7 @@ public class REST {
 
 					if (found == null || found.isEmpty()) {
 						model.addEmpresario(userData);
-						new emailService(userData).sendSimpleEmail("Antenas - Sua confirmação de conta", "Por favor, para confirmar sua conta, clique no link: ", "empresario");
+						new EmailService(userData).sendSimpleEmail("Antenas - Sua confirmação de conta", "Por favor, para confirmar sua conta, clique no link: ", "empresario");
 						return userData.toJson();
 					} else {
 						return "Email já cadastrado";

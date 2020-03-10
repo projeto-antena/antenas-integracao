@@ -150,7 +150,7 @@ public class ControllerAluno {
 						
 						if (encontrado == null || encontrado.isEmpty()) {
 							model.addAluno(dadosAluno);
-							new emailService(dadosAluno).sendSimpleEmail("Antenas - Sua confirma��o de conta", "Por favor, para confirmar sua conta, clique no link:", "aluno");
+							new EmailService(dadosAluno).sendSimpleEmail("Antenas - Sua confirma��o de conta", "Por favor, para confirmar sua conta, clique no link:", "aluno");
 							return dadosAluno.toJson();
 						}else {
 							return "Email ja cadastrado!";
