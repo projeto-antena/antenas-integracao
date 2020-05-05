@@ -1,12 +1,18 @@
-# Alunos - RA
+# Padrões de Projetos - 4º semestre de BD
+
+Professor: Giuliano Bertoti 
+
+Equipe de alunos.
 
 * Ana - 1460281823004
-* André
+* André - 1460281823005
 * Maria - 1460281823033
 * Wesley - 1460281823049
 
-# Projeto Antenas - Empresário
+# 1ª quinzena de maio
+* em construção 
 
+___
 Esta é a parte do Empresário do Projeto Antenas
 
 [Slides Plataforma](
