@@ -2,7 +2,7 @@
 
 Professor: Giuliano Bertoti 
 
-Equipe de alunos.
+Equipe de alunos:
 
 * Ana - 1460281823004
 * André - 1460281823005
