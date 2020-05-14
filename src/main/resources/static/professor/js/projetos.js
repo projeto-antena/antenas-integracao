@@ -136,11 +136,25 @@ function userData(user){
       </button>
       </li>`);
 
+      let avaliarAluno = $.parseHTML(`
+      <li><i class="fa fa-evaluate-aluno" aria-hidden="true"></i>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-avaliar-aluno">
+          Avaliar aluno
+      </button>
+      </li>`);
+
       let $updateSenha = $(updateSenha);
       $updateSenha.click(function(e){
         e.preventDefault();
         _formUpdateSenha(user);
       });
+ 
+      let $avaliarAluno = $(avaliarAluno);
+      $avaliarAluno.click(function(e){
+        e.preventDefault();
+        _formAvaliarAluno();
+      });
+
       /* </> Alterar Senha */
 
       /* </> Logou do Usuário */
@@ -152,6 +166,7 @@ function userData(user){
       /* </> Pupula Usuário Data */
     
       navPROF.append(data);
+      navPROF.append(avaliarAluno);
       navPROF.append(updateSenha);
       navPROF.append(logout);
       $("li").addClass("list-inline-item");
@@ -297,3 +312,34 @@ function _formUpdateSenha(user){
   });
 }
 
+function _formAvaliarAluno() {
+    let form_avaliacao =  `
+    <div class="modal fade" id="modal-avaliar-aluno" tabindex="-1" role="dialog" aria-labelledby="modal-avaliar-aluno" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Avaliar aluno</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Alunox: <input class="form-control" id="nome-aluno" name="name-aluno" placeholder="Aluno" style="max-width:350px" required>
+        </div>
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Salvar mudanças</button>
+          <div id="modal-footer-avaliar"></div>
+          </div>
+      </div>
+    </div>
+  </div>`;
+
+  /* Evento insere modal no HTML */
+  $(document.body).prepend(form_avaliacao);
+  /* Evento Remove modal do HTML */
+  $('.close').click(function(e){
+    e.preventDefault();
+    $("#modal-avaliar-aluno").remove();
+    $(".modal-backdrop ").remove();
+  });
+}
