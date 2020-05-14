@@ -324,7 +324,27 @@ function _formAvaliarAluno() {
           </button>
         </div>
         <div class="modal-body">
-          Alunox: <input class="form-control" id="nome-aluno" name="name-aluno" placeholder="Aluno" style="max-width:350px" required>
+          Aluno: <input class="form-control" id="nome-aluno" name="name-aluno" placeholder="Aluno" style="max-width:100%" required>
+          </br>
+       	  Competencia: <input class="form-control" id="nome-competencia" name="name-competencia" placeholder="Competencia" style="max-width:100%" required>
+          </br>
+          Nivel na competencia:
+          </br></br>
+          <img height="10%" width="10%" hspace="11%" src="imgs/medalha_bronze.png">
+          <img height="10%" width="10%" hspace="11%" src="imgs/medalha_prata.png">
+          <img height="10%" width="10%" hspace="11%" src="imgs/medalha_ouro.png">
+          <label style="margin:0 13% 0 12.9%">
+	          <input type="radio" name="bronze" valor="1" style="margin:0 13% 0 13%">
+	          <span>Bronze</span>
+	      </label>
+	      <label style="margin:0 0 0 4.6%">
+	      	  <input type="radio" name="prata" valor="2" style="margin:0 17.5% 0 17.5%">
+	      	  <span>Prata</span>
+	      </label>
+	      <label style="margin:0 0 0 21.2%">
+	          <input type="radio" name="ouro" valor="3" style="margin:0 0 0 13%">
+	          <span>Ouro</span>
+	      </label>
         </div>
         <div class="modal-footer" >
           <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Salvar mudanÃ§as</button>
@@ -341,5 +361,10 @@ function _formAvaliarAluno() {
     e.preventDefault();
     $("#modal-avaliar-aluno").remove();
     $(".modal-backdrop ").remove();
+  });
+  
+  /* Evento submita a avaliação */
+  $('#avaliarAluno').click(function(e){
+  	alert("Funciona!");
   });
 }
