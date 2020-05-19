@@ -314,45 +314,71 @@ function _formUpdateSenha(user){
 
 function _formAvaliarAluno() {
     let form_avaliacao =  `
-    <div class="modal fade" id="modal-avaliar-aluno" tabindex="-1" role="dialog" aria-labelledby="modal-avaliar-aluno" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Avaliar aluno</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Aluno: <input class="form-control" id="nome-aluno" name="name-aluno" placeholder="Aluno" style="max-width:100%" required>
-          </br>
-       	  Competencia: <input class="form-control" id="nome-competencia" name="name-competencia" placeholder="Competencia" style="max-width:100%" required>
-          </br>
-          Nivel na competencia:
-          </br></br>
-          <img height="10%" width="10%" hspace="11%" src="imgs/medalha_bronze.png">
-          <img height="10%" width="10%" hspace="11%" src="imgs/medalha_prata.png">
-          <img height="10%" width="10%" hspace="11%" src="imgs/medalha_ouro.png">
-          <label style="margin:0 13% 0 12.9%">
-	          <input type="radio" name="medal" value="1" style="margin:0 13% 0 13%">
-	          <span>Bronze</span>
-	      </label>
-	      <label style="margin:0 0 0 4.6%">
-	      	  <input type="radio" name="medal" value="2" style="margin:0 17.5% 0 17.5%">
-	      	  <span>Prata</span>
-	      </label>
-	      <label style="margin:0 0 0 21.2%">
-	          <input type="radio" name="medal" value="3" style="margin:0 0 0 13%">
-	          <span>Ouro</span>
-	      </label>
-        </div>
-        <div class="modal-footer" >
-          <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Avaliar</button>
-          <div id="modal-footer-avaliar"></div>
-          </div>
+<div class="modal fade" id="modal-avaliar-aluno" tabindex="-1" role="dialog" aria-labelledby="modal-avaliar-aluno" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Avaliar aluno</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+
+      <div class="modal-body">
+        <strong>Aluno</strong>: <input class="form-control" id="nome-aluno" name="name-aluno" placeholder="Aluno" style="max-width:100%" required>
+        <br>
+        selecione uma <strong>competência</strong>
+        <br>
+        <select class="form-control" id="competencia" name="competencia"></select>
+        <br>
+        ou informe uma nova <strong>competência</strong>: <input class="form-control" id="nova-competencia" name="competencia" placeholder="Competência" style="max-width:100%" required>
+        <br>
+        Nivel na competencia:
+        <br><br>
+        <div class="row" width="100%">
+
+          <div class="col-md-4" style="text-align:center;">
+          <th>
+            <img hspace="11%" src="imgs/medalha_bronze.png">
+          </th>
+          <td style="text-align:center;">
+            <input type="radio" id="bronze" name="medalha" value="bronze"><br>
+            <label>Bronze</label>
+          </td>
+          </div>
+
+          <div class="col-md-4" style="text-align:center;">
+          <th>
+            <img hspace="11%" src="imgs/medalha_prata.png">
+          </th>
+          <td style="text-align:center;">
+            <input type="radio" id="prata" name="medalha" value="prata"><br>
+            <label>Prata</label>
+          </td>
+          </div>
+
+          <div class="col-md-4" style="text-align:center;">
+          <th>
+            <img hspace="11%" src="imgs/medalha_ouro.png">
+          </th>
+          <td style="text-align:center;">
+            <input type="radio" id="ouro" name="medalha" value="ouro"><br>
+            <label>Ouro</label>
+          </td>
+          </div>
+
+       </div>
+     </div>
+
+     <div class="modal-footer" >
+      <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Avaliar</button>
+      <div id="modal-footer-avaliar"></div>
     </div>
-  </div>`;
+  </div>
+</div>
+</div>
+  `;
 
   /* Evento insere modal no HTML */
   $(document.body).prepend(form_avaliacao);
@@ -363,8 +389,28 @@ function _formAvaliarAluno() {
     $(".modal-backdrop ").remove();
   });
   
-  /* Evento submita a avalia��o */
+  /* Evento submita a avaliacao */
   $('#avaliarAluno').click(function(e){
-  	alert("Funciona!");
+ 	
+ 	let medalha_competencia
+
+ 	if (!$('#competencia').val()){
+ 		if (!$('#nova-competencia').val()){
+ 			alert("É necessário infomar uma competência")
+ 		} else {
+ 			medalha_competencia = $('#nova-competencia').val()
+ 		};
+ 	} else {
+ 		medalha_competencia = $('#nova-competencia').val()
+ 	};
+ 	
+    json = {
+           aluno: $("#nome-aluno").val(),
+           medalha: $("input[name='medalha']:checked").val(),
+           competencia: medalha_competencia
+       };
+
+	console.log(json);
+ 	jsonString = JSON.stringify(json);
   });
 }
