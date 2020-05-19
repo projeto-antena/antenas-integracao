@@ -10,7 +10,7 @@ Equipe de alunos:
 * Wesley - 1460281823049
 
 # 1ª quinzena de maio
-* em construção 
+* criação de modal para atribuição de medalhas ('Avaliar aluno')
 
 ___
 Esta é a parte do Empresário do Projeto Antenas
