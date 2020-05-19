@@ -334,20 +334,20 @@ function _formAvaliarAluno() {
           <img height="10%" width="10%" hspace="11%" src="imgs/medalha_prata.png">
           <img height="10%" width="10%" hspace="11%" src="imgs/medalha_ouro.png">
           <label style="margin:0 13% 0 12.9%">
-	          <input type="radio" name="bronze" valor="1" style="margin:0 13% 0 13%">
+	          <input type="radio" name="medal" value="1" style="margin:0 13% 0 13%">
 	          <span>Bronze</span>
 	      </label>
 	      <label style="margin:0 0 0 4.6%">
-	      	  <input type="radio" name="prata" valor="2" style="margin:0 17.5% 0 17.5%">
+	      	  <input type="radio" name="medal" value="2" style="margin:0 17.5% 0 17.5%">
 	      	  <span>Prata</span>
 	      </label>
 	      <label style="margin:0 0 0 21.2%">
-	          <input type="radio" name="ouro" valor="3" style="margin:0 0 0 13%">
+	          <input type="radio" name="medal" value="3" style="margin:0 0 0 13%">
 	          <span>Ouro</span>
 	      </label>
         </div>
         <div class="modal-footer" >
-          <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Salvar mudanças</button>
+          <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Avaliar</button>
           <div id="modal-footer-avaliar"></div>
           </div>
       </div>
