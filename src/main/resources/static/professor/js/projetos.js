@@ -401,7 +401,7 @@ function _formAvaliarAluno() {
  			medalha_competencia = $('#nova-competencia').val()
  		};
  	} else {
- 		medalha_competencia = $('#nova-competencia').val()
+ 		medalha_competencia = $('#competencia').val()
  	};
  	
     json = {
