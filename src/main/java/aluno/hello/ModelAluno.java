@@ -154,8 +154,8 @@ public class ModelAluno {
 		MongoCollection<Document> alunos = db.getCollection("alunos");
 		FindIterable<Document> alunosF = alunos.find();
 		List<String> listAlunos = new ArrayList<String>();
-		for(Document proj:alunosF) {
-			listAlunos.add(proj.toJson());
+		for(Document aluno : alunosF) {
+			listAlunos.add(aluno.toJson());
 		}
 		return listAlunos;
 	}
