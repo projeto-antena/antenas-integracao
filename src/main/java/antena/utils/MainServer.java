@@ -123,6 +123,7 @@ public class MainServer {
 	    controller.atribuirProjeto();
 	    controller.entregaProjeto();
 	    controller.ativarUsuario();
+	    controller.listAlunos();
 	    
 	    //validacao alunos
 	    controller.validaAluno();
