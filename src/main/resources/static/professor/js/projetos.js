@@ -338,7 +338,7 @@ function _formAvaliarAluno() {
         </select>
         <br>
         ou informe uma nova <strong>competência</strong>: <input class="form-control" id="nova-competencia" name="competencia" placeholder="Competência" style="max-width:100%" required>
-        <span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
+        <span class='warning' id='warning-competencia-ja-existe'>Já existe uma competência com este nome<br></span><span><span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
         <br>
         Nível na competencia:
         <br><br>
@@ -392,9 +392,10 @@ function _formAvaliarAluno() {
   /* Evento insere modal no HTML */
   $(document.body).prepend(form_avaliacao);
 
-
+  //avisos
   $('#warning-aluno').hide();
   $('#warning-competencia').hide();
+  $('#warning-competencia-ja-existe').hide();
   $('#warning-medalha').hide();
 
   function get_opcoes(endpoint, select_id){
@@ -402,6 +403,10 @@ function _formAvaliarAluno() {
 
       lista = JSON.parse(data)
       console.log(lista);
+
+      if (select_id === 'competencia'){
+        competencia = lista;
+      }
 
       $.each(lista, function () {
 
@@ -414,8 +419,13 @@ function _formAvaliarAluno() {
 
       });
 
-    });    
+    });
+
   };
+
+  get_opcoes('/listarAlunos', 'aluno');
+
+  get_opcoes('/listarCompetencias', 'competencia');
 
   /* Evento Remove modal do HTML */
   $('.close').click(function(e){
@@ -423,10 +433,6 @@ function _formAvaliarAluno() {
     $("#modal-avaliar-aluno").remove();
     $(".modal-backdrop ").remove();
   });
-
-  get_opcoes('/listarAlunos', 'aluno');
-
-  get_opcoes('/listarCompetencias', 'competencia');
 
   /* Evento submita a avaliacao */
   $('#avaliarAluno').click(function(e){
@@ -448,18 +454,36 @@ function _formAvaliarAluno() {
   if ($('#competencia').val()){
 
     medalha_competencia = $('#competencia option:selected').text();
+
     $('#warning-competencia').hide();
+    $('#warning-competencia-ja-existe').hide();
 
   } else if ($('#nova-competencia').val()) {
 
-    medalha_competencia = $('#nova-competencia').text();
-    $('#warning-competencia').hide();
+    //check competencia ja existe
+    if ($.grep(competencia, function (n, i){
+
+      return n.nome === $('#nova-competencia').val();}).length){
+
+      $('#warning-competencia').hide();
+      $('#warning-competencia-ja-existe').show();
+
+    } else {
+
+      medalha_competencia = $('#nova-competencia').val();
+
+      $('#warning-competencia').hide();
+      $('#warning-competencia-ja-existe').hide();
+
+    };
 
   } else {
 
     $('#warning-competencia').show();
+    $('#warning-competencia-ja-existe').hide();
 
   };
+
 
   // check-medalha
   if (!$("input[name='medalha']:checked").val()){
