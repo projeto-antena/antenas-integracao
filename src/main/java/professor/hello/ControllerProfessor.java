@@ -200,7 +200,12 @@ public class ControllerProfessor {
 				}
 			}
 		});
+		get("/listarCompetencias", (req, res) -> {
+			return model.listCompetencias();
+		});
 	}
+	
+	
 
 	public void atualizaProfessor() {
 		post("/updateProfessor", (Request request, Response response) -> {
