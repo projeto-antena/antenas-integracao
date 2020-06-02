@@ -333,7 +333,9 @@ function _formAvaliarAluno() {
         <br>
         selecione uma <strong>competência</strong>
         <br>
-        <select class="form-control" id="competencia" name="competencia"></select>
+        <select class="form-control" id="competencia" name="competencia">
+          <option value="" selected="selected">escolha a competência</option>
+        </select>
         <br>
         ou informe uma nova <strong>competência</strong>: <input class="form-control" id="nova-competencia" name="competencia" placeholder="Competência" style="max-width:100%" required>
         <span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
@@ -417,7 +419,29 @@ function _formAvaliarAluno() {
     });
 
   });
+
   
+    $.get('/listarCompetencias', function(data){
+
+    competencias = JSON.parse(data)
+    console.log(competencias);
+    // $('#warning-aluno').hide();
+    // $('#warning-competencia').hide();
+    // $('#warning-medalha').hide();
+
+    $.each(competencias, function () {
+
+      $('#competencia').append($('<option/>', {
+
+        value: this._id.$oid,
+        text: this.competencia
+
+      }));
+
+    });
+
+  });
+
   /* Evento submita a avaliacao */
   $('#avaliarAluno').click(function(e){
  	
@@ -437,12 +461,12 @@ function _formAvaliarAluno() {
   // check competencia
   if ($('#competencia').val()){
 
-    medalha_competencia = $('#competencia').val();
+    medalha_competencia = $('#competencia option:selected').text();
     $('#warning-competencia').hide();
 
   } else if ($('#nova-competencia').val()) {
 
-    medalha_competencia = $('#nova-competencia').val();
+    medalha_competencia = $('#nova-competencia').text();
     $('#warning-competencia').hide();
 
   } else {
@@ -460,9 +484,10 @@ function _formAvaliarAluno() {
 
     $('#warning-medalha').hide();
 
-  }
+  };
 
-      $
+  if (medalha_competencia && $('#aluno option:selected').val() && $("input[name='medalha']:checked").val()){
+  
     json = {
 
       aluno: $('#aluno option:selected').val(),
@@ -470,8 +495,15 @@ function _formAvaliarAluno() {
       competencia: medalha_competencia
 
     };
+  
+    console.log(json);
 
-	console.log(json);
- 	jsonString = JSON.stringify(json);
+   	jsonString = JSON.stringify(json);
+
+    $.post("/competencias", JSON.stringify({"competencia": medalha_competencia}) , "json");
+    $.post("/inserirmedalha", jsonString, "json");
+
+  };
+
   });
 }
