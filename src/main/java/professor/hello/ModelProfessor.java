@@ -48,10 +48,15 @@ public class ModelProfessor {
 		projeto.insertOne(doc);
 	}
 	
-	//teste
+
 	public void addProfessor(Document doc) {
 		MongoCollection<Document> professor = db.getCollection("professor");
 		professor.insertOne(doc);
+	}
+	
+	public void addMedalha(Document doc) {
+		MongoCollection<Document> medalha = db.getCollection("medalha");
+		medalha.insertOne(doc);
 	}
 
 	public Document login(String email, String senha) {
