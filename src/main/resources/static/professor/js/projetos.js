@@ -500,7 +500,10 @@ function _formAvaliarAluno() {
 
    	jsonString = JSON.stringify(json);
 
+    //validar se a competência já existe no banco AQUI 
     $.post("/competencias", JSON.stringify({"competencia": medalha_competencia}) , "json");
+
+    //envia nova medalha para a Collection medalhas
     $.post("/inserirmedalha", jsonString, "json");
 
   };
