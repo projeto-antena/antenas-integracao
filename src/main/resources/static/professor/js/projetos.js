@@ -472,6 +472,8 @@ function _formAvaliarAluno() {
 
       medalha_competencia = $('#nova-competencia').val();
 
+      $.post("/competencias", JSON.stringify({"nome": medalha_competencia}) , "json");
+
       $('#warning-competencia').hide();
       $('#warning-competencia-ja-existe').hide();
 
@@ -509,8 +511,6 @@ function _formAvaliarAluno() {
     console.log(medalha);
 
    	jsonString = JSON.stringify(medalha);
-
-    $.post("/competencias", JSON.stringify({"nome": medalha_competencia}) , "json");
 
     //envia nova medalha para a Collection medalhas
     $.post("/inserirmedalha", jsonString, "json");
