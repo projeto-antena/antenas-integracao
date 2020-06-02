@@ -23,7 +23,7 @@ public class ControllerProfessor {
 		super();
 		this.model = model;
 	}
-	
+
 	public String getWhoIsauth() {
 		return WhoIsauth;
 	}
@@ -31,7 +31,7 @@ public class ControllerProfessor {
 	public void setWhoIsauth(String whoIsauth) {
 		WhoIsauth = whoIsauth;
 	}
-	
+
 	public void Auth() { // Gera um token de autentica��o para o usu�rio
 		post("/Auth", new Route() {
 			@Override
@@ -65,7 +65,7 @@ public class ControllerProfessor {
 			}
 		});
 	}
-	
+
 	public boolean IsAuth(String body) { // Verifica se o usu�rio est� autenticado
 		try {
 			// setting
@@ -86,8 +86,7 @@ public class ControllerProfessor {
 			return false;
 		}
 	}
-	
-	
+
 	public void ativarUsuario() { // � chamado quando o usuario recebe o link de ativa��o no email
 		get("/active/professor/:email", new Route() {
 			@Override
@@ -125,6 +124,7 @@ public class ControllerProfessor {
 			}
 		});
 	}
+
 	public void updateProjetoProfessor() {
 		post("/updateProjetoProfessor", (Request request, Response response) -> {
 			response.header("Access-Control-Allow-Origin", "*");
@@ -133,8 +133,8 @@ public class ControllerProfessor {
 			return request.body();
 		});
 	}
-	public void inserirProfessor() {
 
+	public void inserirProfessor() {
 		post("/professorcadastro", new Route() {
 			@Override
 			public Object handle(final Request request, final Response response) {
@@ -161,6 +161,51 @@ public class ControllerProfessor {
 		});
 		
 	}
+
+	public void inserirMedalha() {
+		post("/inserirmedalha", new Route() {
+			@Override
+			public Object handle(final Request request, final Response response) {
+				try {
+					response.header("Access-Control-Allow-Origin", "*");
+					String jsonString = request.body();
+					Document medalData = Document.parse(jsonString);
+					
+					//if() {
+					model.addMedalha(medalData);
+					return medalData.toJson();
+					//}
+				}catch (Exception ex) {
+					return "erro 500" + ex;
+				}
+			}
+		});
+	}
+	
+	public void competencias() {
+		post("/competencias", new Route() {
+			@Override
+			public Object handle(final Request request, final Response response) {
+				try {
+					response.header("Access-Control-Allow-Origin", "*");
+					String jsonString = request.body();
+					Document competenciasData = Document.parse(jsonString);
+					
+					//if() {
+					model.addCompetencias(competenciasData);
+					return competenciasData.toJson();
+					//}
+				}catch (Exception ex) {
+					return "erro 500" + ex;
+				}
+			}
+		});
+		get("/listarCompetencias", (req, res) -> {
+			return model.listCompetencias();
+		});
+	}
+	
+	
 
 	public void atualizaProfessor() {
 		post("/updateProfessor", (Request request, Response response) -> {

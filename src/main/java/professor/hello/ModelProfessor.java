@@ -1,6 +1,7 @@
 package professor.hello;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -42,16 +43,30 @@ public class ModelProfessor {
 		return projects;
 	}
 	
+	public List<String> listCompetencias() {
+		MongoCollection<Document> competencias = db.getCollection("competencias");
+		FindIterable<Document> competenciasF = competencias.find();
+		List<String> listCompetencias = new ArrayList<String>();
+		for(Document competencia : competenciasF) {
+			listCompetencias.add(competencia.toJson());
+		}
+		return listCompetencias;
+	}
 
 	public void addProjeto(Document doc) {
 		MongoCollection<Document> projeto = db.getCollection("projeto");
 		projeto.insertOne(doc);
 	}
 	
-	//teste
+
 	public void addProfessor(Document doc) {
 		MongoCollection<Document> professor = db.getCollection("professor");
 		professor.insertOne(doc);
+	}
+	
+	public void addMedalha(Document doc) {
+		MongoCollection<Document> medalha = db.getCollection("medalha");
+		medalha.insertOne(doc);
 	}
 
 	public Document login(String email, String senha) {
@@ -59,8 +74,6 @@ public class ModelProfessor {
 		Document found = prof.find(new Document("email", email).append("senha", senha)).first();
 		return found;
 	}
-	
-
 	
 	public Document ativarProfessor(String email) {
 		Document prof = searchByEmail(email);
@@ -94,6 +107,9 @@ public class ModelProfessor {
 		return projetos.findOneAndUpdate(query, newDocument, (new FindOneAndUpdateOptions()).upsert(true));
 	}
 	
-	
+	public void addCompetencias(Document doc) {
+		MongoCollection<Document> competencias = db.getCollection("competencias");
+		competencias.insertOne(doc);
+	}
 
 }

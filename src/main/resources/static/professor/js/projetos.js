@@ -30,18 +30,18 @@ if(session_login == null){
       /* <> Funções */
     
       /* listagem de projetos do professor */
-      function insertMyProjects(projecs) {
+      function insertMyProjects(projects) {
         
-        console.log(projecs);
+        console.log(projects);
         let tbody = $('[data-myProjects-table-body]');
     
-        projecs.forEach(project => {
+        projects.forEach(project => {
           let project_id = project._id.$oid;
           let tr2 = $.parseHTML(`<tr data-project-item="${ project._id }> 
             <th scope="row">${ project.titulo }</th>
                 <td>${ project.titulo }</td>
                 <td>${ project['descricao-breve'] }</td>
-                <td>Nome da Empresa</td>
+                <td>${ project['responsavel-empresario'] }</td>
                 <td id="td-key">${project['chave'] != null ? project['chave'] : '<input type="text" class="form-control" id="keyAlId-'+project_id+'" name="key_al" placeholder="Inserir Chave">'}<td>
                 <td id="td-alkey-${project_id}"></td>
                 <td id="td-alunos-${project_id}"></td>
@@ -326,50 +326,59 @@ function _formAvaliarAluno() {
       </div>
 
       <div class="modal-body">
-        <strong>Aluno</strong>: <input class="form-control" id="nome-aluno" name="name-aluno" placeholder="Aluno" style="max-width:100%" required>
+        <strong>Aluno</strong>: <select class="form-control" id="aluno" required>
+          <option value="" selected="selected">escolha o aluno</option>
+        </select>
+        <span class='warning' id='warning-aluno'>Escolha o aluno!<br></span>
         <br>
         selecione uma <strong>competência</strong>
         <br>
-        <select class="form-control" id="competencia" name="competencia"></select>
+        <select class="form-control" id="competencia" name="competencia">
+          <option value="" selected="selected">escolha a competência</option>
+        </select>
         <br>
         ou informe uma nova <strong>competência</strong>: <input class="form-control" id="nova-competencia" name="competencia" placeholder="Competência" style="max-width:100%" required>
+        <span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
         <br>
         Nivel na competencia:
         <br><br>
+
         <div class="row" width="100%">
 
           <div class="col-md-4" style="text-align:center;">
-          <th>
-            <img hspace="11%" src="imgs/medalha_bronze.png">
-          </th>
-          <td style="text-align:center;">
-            <input type="radio" id="bronze" name="medalha" value="bronze"><br>
-            <label>Bronze</label>
-          </td>
+            <th>
+              <img hspace="11%" src="imgs/medalha_bronze.png">
+            </th>
+            <td style="text-align:center;">
+              <input type="radio" id="bronze" name="medalha" value="bronze"><br>
+              <label>Bronze</label>
+            </td>
           </div>
 
           <div class="col-md-4" style="text-align:center;">
-          <th>
-            <img hspace="11%" src="imgs/medalha_prata.png">
-          </th>
-          <td style="text-align:center;">
-            <input type="radio" id="prata" name="medalha" value="prata"><br>
-            <label>Prata</label>
-          </td>
+            <th>
+              <img hspace="11%" src="imgs/medalha_prata.png">
+            </th>
+            <td style="text-align:center;">
+              <input type="radio" id="prata" name="medalha" value="prata"><br>
+              <label>Prata</label>
+            </td>
           </div>
 
           <div class="col-md-4" style="text-align:center;">
-          <th>
-            <img hspace="11%" src="imgs/medalha_ouro.png">
-          </th>
-          <td style="text-align:center;">
-            <input type="radio" id="ouro" name="medalha" value="ouro"><br>
-            <label>Ouro</label>
-          </td>
+            <th>
+              <img hspace="11%" src="imgs/medalha_ouro.png">
+            </th>
+            <td style="text-align:center;">
+              <input type="radio" id="ouro" name="medalha" value="ouro"><br>
+              <label>Ouro</label>
+            </td>
           </div>
-
-       </div>
-     </div>
+          <div class="col-md-12 warning" id='warning-medalha' style="text-align:center;">
+            Escolha uma medalha!
+          </div>
+        </div>
+      </div>
 
      <div class="modal-footer" >
       <button type="submit" class="btn btn-primary avaliarAluno" id="avaliarAluno">Avaliar</button>
@@ -382,35 +391,119 @@ function _formAvaliarAluno() {
 
   /* Evento insere modal no HTML */
   $(document.body).prepend(form_avaliacao);
+
   /* Evento Remove modal do HTML */
   $('.close').click(function(e){
     e.preventDefault();
     $("#modal-avaliar-aluno").remove();
     $(".modal-backdrop ").remove();
   });
+
+  $.get('/listarAlunos', function(data){
+
+    alunos = JSON.parse(data)
+    console.log(alunos);
+    $('#warning-aluno').hide();
+    $('#warning-competencia').hide();
+    $('#warning-medalha').hide();
+
+    $.each(alunos, function () {
+
+      $('#aluno').append($('<option/>', {
+
+        value: this._id.$oid,
+        text: this.nome
+
+      }));
+
+    });
+
+  });
+
   
+    $.get('/listarCompetencias', function(data){
+
+    competencias = JSON.parse(data)
+    console.log(competencias);
+    // $('#warning-aluno').hide();
+    // $('#warning-competencia').hide();
+    // $('#warning-medalha').hide();
+
+    $.each(competencias, function () {
+
+      $('#competencia').append($('<option/>', {
+
+        value: this._id.$oid,
+        text: this.competencia
+
+      }));
+
+    });
+
+  });
+
   /* Evento submita a avaliacao */
   $('#avaliarAluno').click(function(e){
  	
+    // check aluno
+   if (!$('#aluno option:selected').val()){
+
+    $('#warning-aluno').show();
+
+  } else {
+
+    $('#warning-aluno').hide();
+
+  };
+
  	let medalha_competencia
 
- 	if (!$('#competencia').val()){
- 		if (!$('#nova-competencia').val()){
- 			alert("É necessário infomar uma competência")
- 		} else {
- 			medalha_competencia = $('#nova-competencia').val()
- 		};
- 	} else {
- 		medalha_competencia = $('#competencia').val()
- 	};
- 	
-    json = {
-           aluno: $("#nome-aluno").val(),
-           medalha: $("input[name='medalha']:checked").val(),
-           competencia: medalha_competencia
-       };
+  // check competencia
+  if ($('#competencia').val()){
 
-	console.log(json);
- 	jsonString = JSON.stringify(json);
+    medalha_competencia = $('#competencia option:selected').text();
+    $('#warning-competencia').hide();
+
+  } else if ($('#nova-competencia').val()) {
+
+    medalha_competencia = $('#nova-competencia').text();
+    $('#warning-competencia').hide();
+
+  } else {
+
+    $('#warning-competencia').show();
+
+  };
+
+  // check-medalha
+  if (!$("input[name='medalha']:checked").val()){
+
+    $('#warning-medalha').show();
+
+  } else {
+
+    $('#warning-medalha').hide();
+
+  };
+
+  if (medalha_competencia && $('#aluno option:selected').val() && $("input[name='medalha']:checked").val()){
+  
+    json = {
+
+      aluno: $('#aluno option:selected').val(),
+      medalha: $("input[name='medalha']:checked").val(),
+      competencia: medalha_competencia
+
+    };
+  
+    console.log(json);
+
+   	jsonString = JSON.stringify(json);
+
+    $.post("/competencias", JSON.stringify({"competencia": medalha_competencia}) , "json");
+    $.post("/inserirmedalha", jsonString, "json");
+
+  };
+
   });
 }

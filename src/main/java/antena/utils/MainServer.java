@@ -104,6 +104,8 @@ public class MainServer {
 	    controller.searchprofessor();
 	    controller.atualizaProfessor();
 	    controller.inserirProfessor();
+	    controller.inserirMedalha();
+	    controller.competencias();
     }
 
     public static void initializeModelProfessor(){
@@ -123,6 +125,7 @@ public class MainServer {
 	    controller.atribuirProjeto();
 	    controller.entregaProjeto();
 	    controller.ativarUsuario();
+	    controller.listAlunos();
 	    
 	    //validacao alunos
 	    controller.validaAluno();
