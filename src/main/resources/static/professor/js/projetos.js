@@ -434,7 +434,7 @@ function _formAvaliarAluno() {
       $('#competencia').append($('<option/>', {
 
         value: this._id.$oid,
-        text: this.competencia
+        text: this.nome
 
       }));
 
@@ -488,7 +488,7 @@ function _formAvaliarAluno() {
 
   if (medalha_competencia && $('#aluno option:selected').val() && $("input[name='medalha']:checked").val()){
   
-    json = {
+    medalha = {
 
       aluno: $('#aluno option:selected').val(),
       medalha: $("input[name='medalha']:checked").val(),
@@ -496,12 +496,12 @@ function _formAvaliarAluno() {
 
     };
   
-    console.log(json);
+    console.log(medalha);
 
-   	jsonString = JSON.stringify(json);
+   	jsonString = JSON.stringify(medalha);
 
     //validar se a competência já existe no banco AQUI 
-    $.post("/competencias", JSON.stringify({"competencia": medalha_competencia}) , "json");
+    $.post("/competencias", JSON.stringify({"nome": medalha_competencia}) , "json");
 
     //envia nova medalha para a Collection medalhas
     $.post("/inserirmedalha", jsonString, "json");
