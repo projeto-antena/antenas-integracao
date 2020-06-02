@@ -340,7 +340,7 @@ function _formAvaliarAluno() {
         ou informe uma nova <strong>competência</strong>: <input class="form-control" id="nova-competencia" name="competencia" placeholder="Competência" style="max-width:100%" required>
         <span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
         <br>
-        Nivel na competencia:
+        Nível na competencia:
         <br><br>
 
         <div class="row" width="100%">
@@ -392,6 +392,31 @@ function _formAvaliarAluno() {
   /* Evento insere modal no HTML */
   $(document.body).prepend(form_avaliacao);
 
+
+  $('#warning-aluno').hide();
+  $('#warning-competencia').hide();
+  $('#warning-medalha').hide();
+
+  function get_opcoes(endpoint, select_id){
+    $.get(endpoint, function(data){
+
+      lista = JSON.parse(data)
+      console.log(lista);
+
+      $.each(lista, function () {
+
+        $('#' + select_id).append($('<option/>', {
+
+          value: this._id.$oid,
+          text: this.nome
+
+        }));
+
+      });
+
+    });    
+  };
+
   /* Evento Remove modal do HTML */
   $('.close').click(function(e){
     e.preventDefault();
@@ -399,48 +424,9 @@ function _formAvaliarAluno() {
     $(".modal-backdrop ").remove();
   });
 
-  $.get('/listarAlunos', function(data){
+  get_opcoes('/listarAlunos', 'aluno');
 
-    alunos = JSON.parse(data)
-    console.log(alunos);
-    $('#warning-aluno').hide();
-    $('#warning-competencia').hide();
-    $('#warning-medalha').hide();
-
-    $.each(alunos, function () {
-
-      $('#aluno').append($('<option/>', {
-
-        value: this._id.$oid,
-        text: this.nome
-
-      }));
-
-    });
-
-  });
-
-  
-    $.get('/listarCompetencias', function(data){
-
-    competencias = JSON.parse(data)
-    console.log(competencias);
-    // $('#warning-aluno').hide();
-    // $('#warning-competencia').hide();
-    // $('#warning-medalha').hide();
-
-    $.each(competencias, function () {
-
-      $('#competencia').append($('<option/>', {
-
-        value: this._id.$oid,
-        text: this.nome
-
-      }));
-
-    });
-
-  });
+  get_opcoes('/listarCompetencias', 'competencia');
 
   /* Evento submita a avaliacao */
   $('#avaliarAluno').click(function(e){
@@ -492,7 +478,7 @@ function _formAvaliarAluno() {
 
       aluno: $('#aluno option:selected').val(),
       medalha: $("input[name='medalha']:checked").val(),
-      competencia: medalha_competencia
+      competencia: medalha_competencia,
 
     };
   
