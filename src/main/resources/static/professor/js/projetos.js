@@ -510,11 +510,12 @@ function _formAvaliarAluno() {
 
    	jsonString = JSON.stringify(medalha);
 
-    //validar se a competência já existe no banco AQUI 
     $.post("/competencias", JSON.stringify({"nome": medalha_competencia}) , "json");
 
     //envia nova medalha para a Collection medalhas
     $.post("/inserirmedalha", jsonString, "json");
+
+    $("#modal-avaliar-aluno").modal('toggle');
 
   };
 
