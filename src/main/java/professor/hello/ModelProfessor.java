@@ -58,6 +58,11 @@ public class ModelProfessor {
 		MongoCollection<Document> medalha = db.getCollection("medalha");
 		medalha.insertOne(doc);
 	}
+	
+	public void addCompetencias(Document doc) {
+		MongoCollection<Document> competencias = db.getCollection("competencias");
+		competencias.insertOne(doc);
+	}
 
 	public Document login(String email, String senha) {
 		MongoCollection<Document> prof = db.getCollection("professor");

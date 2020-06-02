@@ -181,6 +181,26 @@ public class ControllerProfessor {
 			}
 		});
 	}
+	
+	public void competencias() {
+		post("/competencias", new Route() {
+			@Override
+			public Object handle(final Request request, final Response response) {
+				try {
+					response.header("Access-Control-Allow-Origin", "*");
+					String jsonString = request.body();
+					Document competenciasData = Document.parse(jsonString);
+					
+					//if() {
+					model.addCompetencias(competenciasData);
+					return competenciasData.toJson();
+					//}
+				}catch (Exception ex) {
+					return "erro 500" + ex;
+				}
+			}
+		});
+	}
 
 	public void atualizaProfessor() {
 		post("/updateProfessor", (Request request, Response response) -> {
