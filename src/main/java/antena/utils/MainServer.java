@@ -104,6 +104,7 @@ public class MainServer {
 	    controller.searchprofessor();
 	    controller.atualizaProfessor();
 	    controller.inserirProfessor();
+	    controller.inserirMedalha();
     }
 
     public static void initializeModelProfessor(){
