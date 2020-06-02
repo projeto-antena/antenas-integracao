@@ -160,12 +160,18 @@ public class ModelAluno {
 		return listAlunos;
 	}
 
-	public void alterarId (String id, Document alteracao){
+	public void alterarId (String id, Document alteracao) {
 		Document filter = new Document("id", id);
 		MongoCollection<Document> alunos = db.getCollection("alunos");
 		alunos.updateOne(filter, alteracao);
-		}
+	}
 	
+	public String getAlunoById (String id) {
+		Document alunoId = new Document("id", id);
+		MongoCollection<Document> alunos = db.getCollection("alunos");
+		Document aluno = alunos.find(alunoId).first();
+		return aluno.toJson();
+	}
 	
 
 }

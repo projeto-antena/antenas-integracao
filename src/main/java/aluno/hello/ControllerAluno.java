@@ -211,6 +211,12 @@ public class ControllerAluno {
 		});
 	}
 	
+	public void getAluno() {
+		get("/buscarAluno", (req, res) -> {
+			return model.getAlunoById(req.queryParams("id"));
+		});
+	}
+	
 	public void entregaProjeto() {
 		post("/entregar", (req, res) -> {
 			System.out.println("test");
