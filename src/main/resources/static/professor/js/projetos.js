@@ -338,9 +338,9 @@ function _formAvaliarAluno() {
         </select>
         <br>
         ou informe uma nova <strong>competência</strong>: <input class="form-control" id="nova-competencia" name="competencia" placeholder="Competência" style="max-width:100%" required>
-        <span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
+        <span class='warning' id='warning-competencia-ja-existe'>Já existe uma competência com este nome<br></span><span><span class='warning' id='warning-competencia'>Escolha uma competência!<br></span>
         <br>
-        Nivel na competencia:
+        Nível na competencia:
         <br><br>
 
         <div class="row" width="100%">
@@ -392,54 +392,46 @@ function _formAvaliarAluno() {
   /* Evento insere modal no HTML */
   $(document.body).prepend(form_avaliacao);
 
+  //avisos
+  $('#warning-aluno').hide();
+  $('#warning-competencia').hide();
+  $('#warning-competencia-ja-existe').hide();
+  $('#warning-medalha').hide();
+
+  function get_opcoes(endpoint, select_id){
+    $.get(endpoint, function(data){
+
+      lista = JSON.parse(data)
+      console.log(lista);
+
+      if (select_id === 'competencia'){
+        competencia = lista;
+      }
+
+      $.each(lista, function () {
+
+        $('#' + select_id).append($('<option/>', {
+
+          value: this._id.$oid,
+          text: this.nome
+
+        }));
+
+      });
+
+    });
+
+  };
+
+  get_opcoes('/listarAlunos', 'aluno');
+
+  get_opcoes('/listarCompetencias', 'competencia');
+
   /* Evento Remove modal do HTML */
   $('.close').click(function(e){
     e.preventDefault();
     $("#modal-avaliar-aluno").remove();
     $(".modal-backdrop ").remove();
-  });
-
-  $.get('/listarAlunos', function(data){
-
-    alunos = JSON.parse(data)
-    console.log(alunos);
-    $('#warning-aluno').hide();
-    $('#warning-competencia').hide();
-    $('#warning-medalha').hide();
-
-    $.each(alunos, function () {
-
-      $('#aluno').append($('<option/>', {
-
-        value: this._id.$oid,
-        text: this.nome
-
-      }));
-
-    });
-
-  });
-
-  
-    $.get('/listarCompetencias', function(data){
-
-    competencias = JSON.parse(data)
-    console.log(competencias);
-    // $('#warning-aluno').hide();
-    // $('#warning-competencia').hide();
-    // $('#warning-medalha').hide();
-
-    $.each(competencias, function () {
-
-      $('#competencia').append($('<option/>', {
-
-        value: this._id.$oid,
-        text: this.competencia
-
-      }));
-
-    });
-
   });
 
   /* Evento submita a avaliacao */
@@ -462,18 +454,38 @@ function _formAvaliarAluno() {
   if ($('#competencia').val()){
 
     medalha_competencia = $('#competencia option:selected').text();
+
     $('#warning-competencia').hide();
+    $('#warning-competencia-ja-existe').hide();
 
   } else if ($('#nova-competencia').val()) {
 
-    medalha_competencia = $('#nova-competencia').text();
-    $('#warning-competencia').hide();
+    //check competencia ja existe
+    if ($.grep(competencia, function (n, i){
+
+      return n.nome === $('#nova-competencia').val();}).length){
+
+      $('#warning-competencia').hide();
+      $('#warning-competencia-ja-existe').show();
+
+    } else {
+
+      medalha_competencia = $('#nova-competencia').val();
+
+      $.post("/competencias", JSON.stringify({"nome": medalha_competencia}) , "json");
+
+      $('#warning-competencia').hide();
+      $('#warning-competencia-ja-existe').hide();
+
+    };
 
   } else {
 
     $('#warning-competencia').show();
+    $('#warning-competencia-ja-existe').hide();
 
   };
+
 
   // check-medalha
   if (!$("input[name='medalha']:checked").val()){
@@ -488,20 +500,22 @@ function _formAvaliarAluno() {
 
   if (medalha_competencia && $('#aluno option:selected').val() && $("input[name='medalha']:checked").val()){
   
-    json = {
+    medalha = {
 
       aluno: $('#aluno option:selected').val(),
       medalha: $("input[name='medalha']:checked").val(),
-      competencia: medalha_competencia
+      competencia: medalha_competencia,
 
     };
   
-    console.log(json);
+    console.log(medalha);
 
-   	jsonString = JSON.stringify(json);
+   	jsonString = JSON.stringify(medalha);
 
-    $.post("/competencias", JSON.stringify({"competencia": medalha_competencia}) , "json");
+    //envia nova medalha para a Collection medalhas
     $.post("/inserirmedalha", jsonString, "json");
+
+    $("#modal-avaliar-aluno").modal('toggle');
 
   };
 
