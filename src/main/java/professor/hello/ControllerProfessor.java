@@ -162,7 +162,7 @@ public class ControllerProfessor {
 		
 	}
 
-	public void inserirMedalha() {
+	public void medalhas() {
 		post("/inserirmedalha", new Route() {
 			@Override
 			public Object handle(final Request request, final Response response) {
@@ -179,6 +179,10 @@ public class ControllerProfessor {
 					return "erro 500" + ex;
 				}
 			}
+		});
+		
+		get("/buscarmedalha/:email", (request, respose) -> {
+			return model.buscarMedalhasPorAluno(request.params("email"));
 		});
 	}
 	
