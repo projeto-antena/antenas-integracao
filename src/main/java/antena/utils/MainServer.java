@@ -130,5 +130,6 @@ public class MainServer {
 	    //validacao alunos
 	    controller.validaAluno();
 	    controller.loginAluno();
+	    controller.getAlunoByEmail();
     }
 }

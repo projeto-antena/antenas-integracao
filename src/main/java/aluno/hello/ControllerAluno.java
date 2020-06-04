@@ -211,9 +211,11 @@ public class ControllerAluno {
 		});
 	}
 	
-	public void getAluno() {
-		get("/buscarAluno", (req, res) -> {
-			return model.getAlunoById(req.queryParams("id"));
+	public void getAlunoByEmail() {
+		get("/buscarAluno/:email", (req, res) -> {
+			String email = req.params("email");
+			Document aluno = model.procurarEmail(email); 
+			return aluno != null ? aluno.toJson() : "{}";
 		});
 	}
 	

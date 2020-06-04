@@ -20,8 +20,9 @@
     	<img class="img-fluid col-1" style="max-width:180px" src="imgs/logo.svg">
 
     	<div class="navbar-buttons">
-      	<button onclick="" class="button profile">Perfil</button>
-	    <button onclick="abrePopupLogin(event)" class="button logout">Sair</button>
+			<button onclick="" class="button profile">Início</button>
+		  	<button onclick="" class="button profile">Perfil</button>
+	    <button class="button logout">Sair</button>
     </div>
   </div>
   <div class="profile-wrapper">
@@ -30,15 +31,16 @@
   			<div class="flex profile-user-container">
   				<img class="profile-pic" src='./img/profile/pic-placeholder.png'>
 		  		<div class="flex user-info">
-		  			<p>Jorjin, O Projetista</p>
-		  			<p>jorge.jorjin@email.com</p>
-		  		</div>
+		  			<p id="nome-aluno">Nome</p>
+		  			<p id="email-aluno">email</p>
+				  </div>
   			</div>
   			<div class="profile-buttons">
   				<button style="background-color:#384F80; font-size: 12px;">Editar</button>
   			</div>
-	  	</div>
+		  </div>
   	</div>
   </div>
+  <script src="js/profile.js"></script>
 </body>
 </html>

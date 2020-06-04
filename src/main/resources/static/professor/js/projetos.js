@@ -10,7 +10,7 @@ if(session_login == null){
       let projects;
     
 /* Informações do Usuário Professor */
-      $.post("/professorLogado", JSON.stringify({'email': session_login}), function(user){
+      $.post("/professorLogado", JSON.stringify({'email': session_login}), function(user) {
         userData(user);
       }, "json");
  
