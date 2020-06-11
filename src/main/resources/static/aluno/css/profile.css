@@ -15,8 +15,11 @@
 }
 
 .profile-header {
-	margin: 20px 0;
+	margin: 20px 0 60px 0;
 	justify-content: space-between;
+	background-color: #eef8ff;
+	padding: 15px 25px;
+	border-radius: 10px;
 }
 
 .profile-user-container {
@@ -31,4 +34,59 @@
 .user-info {
 	flex-direction: column;
 	margin-left: 20px;
+}
+
+.info-section {
+	padding: 10px;
+}
+
+.medal-section {
+	width: 100%;
+}
+
+.medal-board-title {
+	font-weight: 700;
+	font-size: 20px;
+	border-bottom: 1px solid gray;
+	padding: 10px 0;
+	width: 100%;
+}
+
+#nome-aluno {
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.medal-board {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.medal {
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 50px;
+	border: 1px solid lightgray;
+	border-radius: 10px;
+	box-shadow: 5px 5px 10px lightgray;
+	margin: 10px;
+}
+
+.medal-image {
+	margin-bottom: 15px;
+}
+
+.medal-competence {
+	font-weight: 700;
+	font-size: 20px;
+	margin-bottom: 0;
+	text-transform: capitalize;
+}
+
+.medal-description {
+	font-size: 14px;
+	color: gray;
+	text-transform: capitalize;
 }

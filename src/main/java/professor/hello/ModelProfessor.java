@@ -114,14 +114,5 @@ public class ModelProfessor {
 		MongoCollection<Document> medalha = db.getCollection("medalha");
 		medalha.insertOne(doc);
 	}
-	
-	public List<String> buscarMedalhasPorAluno(String email){
-		MongoCollection<Document> medalCollection = db.getCollection("medalha");
-		FindIterable<Document> medals = medalCollection.find(new Document("email", email)).projection(Projections.include("medalha","competencia"));
-		List<String> medalsFound =  new ArrayList<String>();
-		for(Document medalha : medals) {
-			medalsFound.add(medalha.toJson());
-		}
-		return medalsFound;
-	}
+
 }

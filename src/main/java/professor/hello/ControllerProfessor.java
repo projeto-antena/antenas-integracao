@@ -180,10 +180,6 @@ public class ControllerProfessor {
 				}
 			}
 		});
-		
-		get("/buscarmedalha/:email", (request, respose) -> {
-			return model.buscarMedalhasPorAluno(request.params("email"));
-		});
 	}
 	
 	public void competencias() {

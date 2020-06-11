@@ -14,6 +14,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.Projections;
 
 public class ModelAluno {
 
@@ -166,5 +167,14 @@ public class ModelAluno {
 		alunos.updateOne(filter, alteracao);
 	}
 	
+	public List<String> buscarMedalhasPorAluno(String email){
+		MongoCollection<Document> medalCollection = db.getCollection("medalha");
+		FindIterable<Document> medals = medalCollection.find(new Document("email", email)).projection(Projections.include("medalha","competencia"));
+		List<String> medalsFound =  new ArrayList<String>();
+		for(Document medalha : medals) {
+			medalsFound.add(medalha.toJson());
+		}
+		return medalsFound;
+	}
 
 }

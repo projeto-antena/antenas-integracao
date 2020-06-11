@@ -231,6 +231,12 @@ public class ControllerAluno {
 			Document now = model.getProject(id);
 			return model.submitProject(id, now, alunos, descricao, linkGitHub);
 		});
-	}	
+	}
+	
+	public void buscaMedalhas() {
+		get("/buscarmedalha/:email", (request, respose) -> {
+			return model.buscarMedalhasPorAluno(request.params("email"));
+		});
+	}
 	
 }
