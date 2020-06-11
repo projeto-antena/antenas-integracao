@@ -13,6 +13,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.Projections;
 
 public class ModelProfessor {
 
@@ -43,15 +44,6 @@ public class ModelProfessor {
 		return projects;
 	}
 	
-	public List<String> listCompetencias() {
-		MongoCollection<Document> competencias = db.getCollection("competencias");
-		FindIterable<Document> competenciasF = competencias.find();
-		List<String> listCompetencias = new ArrayList<String>();
-		for(Document competencia : competenciasF) {
-			listCompetencias.add(competencia.toJson());
-		}
-		return listCompetencias;
-	}
 
 	public void addProjeto(Document doc) {
 		MongoCollection<Document> projeto = db.getCollection("projeto");
@@ -64,10 +56,6 @@ public class ModelProfessor {
 		professor.insertOne(doc);
 	}
 	
-	public void addMedalha(Document doc) {
-		MongoCollection<Document> medalha = db.getCollection("medalha");
-		medalha.insertOne(doc);
-	}
 
 	public Document login(String email, String senha) {
 		MongoCollection<Document> prof = db.getCollection("professor");
@@ -112,4 +100,28 @@ public class ModelProfessor {
 		competencias.insertOne(doc);
 	}
 
+	public List<String> listCompetencias() {
+		MongoCollection<Document> competencias = db.getCollection("competencias");
+		FindIterable<Document> competenciasF = competencias.find();
+		List<String> listCompetencias = new ArrayList<String>();
+		for(Document competencia : competenciasF) {
+			listCompetencias.add(competencia.toJson());
+		}
+		return listCompetencias;
+	}
+	
+	public void addMedalha(Document doc) {
+		MongoCollection<Document> medalha = db.getCollection("medalha");
+		medalha.insertOne(doc);
+	}
+	
+	public List<String> buscarMedalhasPorAluno(String email){
+		MongoCollection<Document> medalCollection = db.getCollection("medalha");
+		FindIterable<Document> medals = medalCollection.find(new Document("email", email)).projection(Projections.include("medalha","competencia"));
+		List<String> medalsFound =  new ArrayList<String>();
+		for(Document medalha : medals) {
+			medalsFound.add(medalha.toJson());
+		}
+		return medalsFound;
+	}
 }

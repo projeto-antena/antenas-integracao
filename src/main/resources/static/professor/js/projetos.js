@@ -410,9 +410,15 @@ function _formAvaliarAluno() {
 
       $.each(lista, function () {
 
+      if (select_id === 'competencia'){
+        id = this._id.$oid;
+      } else {
+        id = this.email;
+      }
+
         $('#' + select_id).append($('<option/>', {
 
-          value: this._id.$oid,
+          value: id,
           text: this.nome
 
         }));

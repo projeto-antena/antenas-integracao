@@ -104,7 +104,7 @@ public class MainServer {
 	    controller.searchprofessor();
 	    controller.atualizaProfessor();
 	    controller.inserirProfessor();
-	    controller.inserirMedalha();
+	    controller.medalhas();
 	    controller.competencias();
     }
 
