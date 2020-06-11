@@ -508,7 +508,7 @@ function _formAvaliarAluno() {
   
     medalha = {
 
-      aluno: $('#aluno option:selected').val(),
+      email: $('#aluno option:selected').val(),
       medalha: $("input[name='medalha']:checked").val(),
       competencia: medalha_competencia,
 
